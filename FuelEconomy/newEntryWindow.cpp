@@ -40,11 +40,6 @@ newEntryWindow::newEntryWindow(std::list<dataEntry*> &entries, entryStats* userS
 	saveButton->labelsize(24);
 	saveButton->callback(CBsaveAndUpdate, this);
 
-	//quit current window button
-	/*quitButton = new Fl_Button(130, 260, 85, 70, "DONE"); //TO BE REMOVED
-	quitButton->labelsize(18);
-	quitButton->callback(CBdone, this);*/
-
 	end();
 	show();
 }
@@ -116,10 +111,10 @@ void newEntryWindow::CBsaveAndUpdateI() {
 //updates stat widgets on main window with latest info
 void newEntryWindow::updateStatMainW() {
 	
-	effW->label(stats->returnEffAvgS());
-	distW->label(stats->returnDistTotalS());
-	fillsW->label(stats->returnFillsS());
-	litreW->label(stats->returnPriceAvgS());
+	effW->label(stats->returnStatS(0));
+	distW->label(stats->returnStatS(1));
+	fillsW->label(stats->returnStatS(2));
+	litreW->label(stats->returnStatS(3));
 }
 
 //sets the default value of the input widgets to guide user input

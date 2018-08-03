@@ -16,7 +16,6 @@ mainWindow::mainWindow(entryStats* userStats, std::list<dataEntry*> &entries, in
 	
 	//efficiency stat box
 	effAvgStat = new Fl_Box(160, 60, 160, 90); //stats->returnEffAvgS()); 
-	effAvgStat->copy_label(stats->returnEffAvgS());
 	effAvgStat->box(FL_NO_BOX);
 	effAvgStat->labelfont(FL_BOLD);
 	effAvgStat->labelsize(64);
@@ -28,7 +27,7 @@ mainWindow::mainWindow(entryStats* userStats, std::list<dataEntry*> &entries, in
 	effAvgLabel->labelsize(24);
 
 	//total distance stat box
-	distStat = new Fl_Box(45, 160, 120, 90, stats->returnDistTotalS());
+	distStat = new Fl_Box(45, 160, 120, 90);
 	distStat->labelfont(FL_BOLD);
 	distStat->labelsize(36);
 	distStat->labeltype(FL_ENGRAVED_LABEL);
@@ -39,7 +38,7 @@ mainWindow::mainWindow(entryStats* userStats, std::list<dataEntry*> &entries, in
 	distLabel->labelsize(14);
 	
 	//total fills stat box
-	fillsStat = new Fl_Box(195, 160, 90, 90, stats->returnFillsS());
+	fillsStat = new Fl_Box(195, 160, 90, 90);
 	fillsStat->box(FL_NO_BOX);
 	fillsStat->labelfont(FL_BOLD);
 	fillsStat->labelsize(36);
@@ -51,7 +50,7 @@ mainWindow::mainWindow(entryStats* userStats, std::list<dataEntry*> &entries, in
 	fillsLabel->labelsize(14);
 
 	//avg price per litre stat box
-	avgLitreStat = new Fl_Box(335, 160, 90, 90, stats->returnPriceAvgS());
+	avgLitreStat = new Fl_Box(335, 160, 90, 90);
 	avgLitreStat->box(FL_NO_BOX);
 	avgLitreStat->labelfont(FL_BOLD);
 	avgLitreStat->labelsize(36);
@@ -82,6 +81,7 @@ mainWindow::mainWindow(entryStats* userStats, std::list<dataEntry*> &entries, in
 	reset->labelsize(18);
 	reset->callback(CBresetData, this);
 
+	setStatWidgetLabels();
 
 	end();
 	show();
@@ -120,11 +120,7 @@ mainWindow::CBresetDataI() {
 			saveEntries(entryList); //clears save file
 
 			//set widgets on main window to reset stat values
-			effAvgStat->label(stats->returnEffAvgS());
-			distStat->label(stats->returnDistTotalS());
-			fillsStat->label(stats->returnFillsS());
-			avgLitreStat->label(stats->returnPriceAvgS());
-
+			setStatWidgetLabels();
 			break;
 		
 		case 1: //no
@@ -142,4 +138,14 @@ mainWindow::resetEntryList() {
 	}
 
 	entryList.clear(); //deletes pointers within list and resets size to 0
+}
+
+//sets the label of the stat widgets to the current stat values
+void
+mainWindow::setStatWidgetLabels() {
+	
+	effAvgStat->label(stats->returnStatS(0));
+	distStat->label(stats->returnStatS(1));
+	fillsStat->label(stats->returnStatS(2));
+	avgLitreStat->label(stats->returnStatS(3));
 }

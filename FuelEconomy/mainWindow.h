@@ -34,6 +34,7 @@ private:
 	inline void CBresetDataI();
 
 	void resetEntryList();
+	void setStatWidgetLabels();
 	
 	std::list<dataEntry*> entryList;
 	entryStats* stats;

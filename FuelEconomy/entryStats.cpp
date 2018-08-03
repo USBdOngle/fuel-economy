@@ -34,7 +34,9 @@ entryStats::entryStats(std::list<dataEntry*> &entries) {
 		}
 	}
 
-	effAvg = effSum / (entries.size() - 1);
+	if (entries.size() > 1){ effAvg = effSum / (entries.size() - 1); } //if we have 1 entry we divide by zero causing -inf
+	else { effAvg = effSum; }
+	
 	distTotal = distLast - distFirst;
 	fills = entries.size();
 	priceAvg = priceSum / entries.size();
@@ -46,13 +48,13 @@ entryStats::~entryStats() {}
 void
 entryStats::updateStats(dataEntry* newEntry, std::list<dataEntry*> &prevEntries) {
 	
-	if (prevEntries.size() != 0) {
+	if (prevEntries.size() != 0) { //unable to calculate total and efficiency when there are no current entries
 		distTotal += newEntry->returnOdo() - prevEntries.back()->returnOdo();
 		effAvg = effAvg + ((prevEntries.back()->returnEfficiency() - effAvg) / fills);
 	}
 
-	priceAvg = ((priceAvg * fills) + newEntry->returnPriceLitre()) / (fills + 1);
 	fills++;
+	priceAvg = priceAvg + ((newEntry->returnPriceLitre() - priceAvg) / fills);
 }
 
 double
@@ -75,37 +77,35 @@ entryStats::returnPriceAvg() {
 	return priceAvg;
 }
 
-char*
-entryStats::returnEffAvgS() {
 
-	std::string s = std::to_string(effAvg).substr(0, 5);
+//returns specified stat as char* (string) needed for FTLK widget labels
+char*
+entryStats::returnStatS(int choice) {
+	//0 = eff, 1 = dist, 2 = fills, 3 = price
+
+	std::string s;
+
+	switch (choice) {
+	case 0:
+		s = std::to_string(effAvg).substr(0, 5);
+		break;
+
+	case 1:
+		s = std::to_string(distTotal);
+		break;
+
+	case 2:
+		s = std::to_string(fills);
+		break;
+
+	case 3:
+		s = std::to_string(priceAvg).substr(0, 4);
+		break;
+	}
+
 	char* c = new char[s.length() + 1]; //create room for null terminator
-	strcpy_s(c, s.length()+1, s.c_str()); //copy contents of string to new char* array
+	strcpy_s(c, s.length() + 1, s.c_str()); //copy contents of string to new char* array
 	return c;
-}
-
-char*
-entryStats::returnDistTotalS() {
-	std::string s = std::to_string(distTotal);
-	char* c = new char[s.length() + 1]; //create room for null terminator
-	strcpy_s(c, s.length()+1, s.c_str()); //copy contents of string to new char* array
-	return c;
-}
-
-char*
-entryStats::returnFillsS() {
-	std::string s = std::to_string(fills);
-	char* c = new char[s.length() + 1]; //create room for null terminator
-	strcpy_s(c, s.length()+1, s.c_str()); //copy contents of string to new char* array
-	return c;
-}
-
-char*
-entryStats::returnPriceAvgS() {
-	std::string s = std::to_string(priceAvg).substr(0,4);
-	char* c = new char[s.length() + 1]; //create room for null terminator
-	strcpy_s(c, s.length()+1, s.c_str()); //copy contents of string to new char* array
-	return c;		//reduces values to two decimal points
 }
 
 //reset stats to default values

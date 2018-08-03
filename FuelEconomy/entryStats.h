@@ -16,11 +16,8 @@ public:
 	int returnFills();
 	double returnPriceAvg();
 
-	char* returnEffAvgS();
-	char* returnDistTotalS();
-	char* returnFillsS();
-	char* returnPriceAvgS();
-
+	char* returnStatS(int choice);
+	
 private:
 
 	double effAvg; //average efficiency L/100km
