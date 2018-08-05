@@ -3,6 +3,7 @@
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Button.h>
 #include <FL/Fl_Input.H>
+#include <FL/fl_ask.H>
 #include <list>
 #include <algorithm>
 #include <string>
@@ -41,6 +42,7 @@ private:
 	static void CBsaveAndUpdate(Fl_Widget*, void* v);
 	inline void CBsaveAndUpdateI();
 
+	bool checkInput(double convertedInputs[4]);
 	bool convertInputs(double convertedInputs[4], const char* date, const char* odo, const char* priceTotal, const char* litresTotal);
 	void updateStatMainW();
 	void setDefaultValuesW();

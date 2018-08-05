@@ -53,30 +53,59 @@ newEntryWindow::~newEntryWindow()
 //returns True if inputs are correctly formatted, false if not
 bool newEntryWindow::convertInputs(double convertedInputs[4], const char* date, const char* odo, const char* priceTotal, const char* litresTotal) {
 
-	//convert date
+	double dateD;
+	double odoD;
+	double priceTotalD;
+	double litresTotalD;
+
+	//convert from const char* to string
 	std::string dateS = std::string(date);
 	dateS.erase(std::remove(dateS.begin(), dateS.end(), '/'), dateS.end());
-	double dateD = stod(dateS);
 	
-	//convert odo
 	std::string odoS = std::string(odo);
-	double odoD = stod(odoS);
-
-	//convert priceTotal
 	std::string priceTotalS = std::string(priceTotal);
-	double priceTotalD = stod(priceTotalS);
-
-	//convert litresTotal
 	std::string litresTotalS = std::string(litresTotal);
-	double litresTotalD = stod(litresTotalS);
 
-	//add array
-	convertedInputs[0] = dateD;
-	convertedInputs[1] = odoD;
+	//check if inputs can convert to double/int
+	try {
+		
+		dateD = stoi(dateS);
+		odoD = stoi(odoS);
+		priceTotalD = stod(priceTotalS);
+		litresTotalD = stod(litresTotalS);
+	}
+	catch (...) {
+		return false;
+	}
+	
+	//add to array
+	convertedInputs[0] = (double)dateD;
+	convertedInputs[1] = (double)odoD;
 	convertedInputs[2] = priceTotalD;
 	convertedInputs[3] = litresTotalD;
 	
-	return true;
+	//check if inputs are well formed
+	return checkInput(convertedInputs);
+}
+
+//returns true if inputs are well formed, current distance is greater than previous
+//return false otherwise
+bool
+newEntryWindow::checkInput(double convertedInputs[4]) {
+
+	//date isn't 8-digit length
+	double test = convertedInputs[0] / 100000000;
+	if (1 <= test || test <= 0.1) {
+		return false;
+	}
+
+	//curent odo input is less than previous
+	else if (entryList.size() > 0 && convertedInputs[1] <= entryList.back()->returnOdo()) {
+		return false;
+	}
+
+	//add more checks as I think of them...
+	else { return true; }
 }
 
 void
@@ -88,10 +117,14 @@ newEntryWindow::CBsaveAndUpdate(Fl_Widget* , void* v) {
 void newEntryWindow::CBsaveAndUpdateI() {
 	
 	double inputs[4]; //date, odo , priceTotal, litresTotal
-	
-	while (!convertInputs(inputs, dateInput->value(), odoInput->value(), priceTotalInput->value(), litresTotalInput->value())) {
-		//add code to prompt user of bad input and try again
+
+	if (!convertInputs(inputs, dateInput->value(), odoInput->value(), priceTotalInput->value(), litresTotalInput->value())) {
+		//warns user about incorrect input;
+		fl_choice("Incorrect input, please try again.", "OK", 0, 0); //OK default
+		setDefaultValuesW();
+		return;
 	}
+		
 	
 	//save entry
 	dataEntry* newEntry = new dataEntry(inputs[0], inputs[1], inputs[2], inputs[3], 0, 0);
@@ -125,3 +158,4 @@ void newEntryWindow::setDefaultValuesW() {
 	priceTotalInput->value("XX.xx");
 	litresTotalInput->value("XX.xx");
 }
+
