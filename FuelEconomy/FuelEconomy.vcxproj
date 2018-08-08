@@ -79,7 +79,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>fltkd.lib;wsock32.lib;comctl32.lib;fltkjpegd.lib;fltkimagesd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -127,6 +127,7 @@
     <ClInclude Include="gui.h" />
     <ClInclude Include="mainWindow.h" />
     <ClInclude Include="newEntryWindow.h" />
+    <ClInclude Include="viewEntriesWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dataEntry.cpp" />
@@ -135,6 +136,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainWindow.cpp" />
     <ClCompile Include="newEntryWindow.cpp" />
+    <ClCompile Include="viewEntriesWindow.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
