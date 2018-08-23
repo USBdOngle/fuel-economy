@@ -138,9 +138,13 @@ mainWindow::CBviewEntriesWindow(Fl_Widget*, void* v) {
 
 void
 mainWindow::CBviewEntriesWindowI() {
-	Fl_Double_Window win(900, 400, "View Entries");
-	viewEntriesWindow* window = new viewEntriesWindow(entryList, 10, 10, 880, 380);
-}
+	Fl_Double_Window* win = new Fl_Double_Window(900, 400, "View Entries");
+	win->begin();
+	viewEntriesWindow* table = new viewEntriesWindow(entryList, 10, 10, 880, 380);
+	win->end();
+	win->resizable(table);
+	win->show();
+}	
 
 void
 mainWindow::resetEntryList() {

@@ -7,6 +7,7 @@ viewEntriesWindow::viewEntriesWindow(std::list<dataEntry*> &entryList, int x, in
 	//fill 2d data vector
 	fillData();
 	// Rows
+	
 	rows(entryList.size());             // how many rows
 	row_header(0);              // disable row headers (along left)
 	row_height_all(20);         // default height of rows
@@ -16,9 +17,9 @@ viewEntriesWindow::viewEntriesWindow(std::list<dataEntry*> &entryList, int x, in
 	col_header(1);              // enable column headers (along top)
 	col_width_all(80);          // default width of columns
 	col_resize(1);              // enable column resizing
-	end();			// end the Fl_Table group
+	end();
+	
 }
-
 
 viewEntriesWindow::~viewEntriesWindow() {}
 
@@ -59,16 +60,10 @@ viewEntriesWindow::drawCell(TableContext context, int row, int col, int x, int y
 		return;
 	
 	case CONTEXT_CELL:                        // Draw data in cells
-		//have to cast first two data as int, the last 4 as doubles
-		if (col <= 1) {
-			sprintf(s, "%d", data[row][col]);
-		}
-		else {
-			sprintf(s, "%lf", data[row][col]);
-		}
-		
+		dataToChar(s, row, col);
 		drawData(s, x, y, w, h);
 		return;
+	
 	default:
 		return;
 	}
@@ -85,7 +80,7 @@ viewEntriesWindow::fillData() {
 }
 
 void
-viewEntriesWindow::dataToChar(const char* s, int row, int col) {
+viewEntriesWindow::dataToChar(char* s, int row, int col) {
 	std::string str;
 	
 	switch (col) {
@@ -93,6 +88,16 @@ viewEntriesWindow::dataToChar(const char* s, int row, int col) {
 		str = std::to_string((int)data[row][col]);
 		str.insert(4, "/");
 		str.insert(7, "/");
-		str.insert(10, "/");
+		break;
+
+	case 1:
+		str = std::to_string((int)data[row][col]);
+		break;
+	
+	default:
+		str = std::to_string(data[row][col]);
+		break;
 	}
+
+	strcpy_s(s, str.length() + 1, str.c_str()); //copy string to c-string
 }

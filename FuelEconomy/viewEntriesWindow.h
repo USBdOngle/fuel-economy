@@ -25,6 +25,6 @@ private:
 	void drawCell(TableContext context, int row = 0, int col = 0, int x = 0, int y = 0, int w = 0, int h = 0);
 
 	void fillData();
-	void dataToChar(const char* s, int row, int col);
+	void dataToChar(char* s, int row, int col);
 };
 
