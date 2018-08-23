@@ -5,7 +5,7 @@
 
 viewEntriesWindow::viewEntriesWindow(std::list<dataEntry*> &entryList, int x, int y, int w, int h, const char *l) : Fl_Table(x, y, w, h, l) {
 	//fill 2d data vector
-	fillData();
+	fillData(entryList);
 	// Rows
 	
 	rows(entryList.size());             // how many rows
@@ -18,7 +18,7 @@ viewEntriesWindow::viewEntriesWindow(std::list<dataEntry*> &entryList, int x, in
 	col_width_all(80);          // default width of columns
 	col_resize(1);              // enable column resizing
 	end();
-	
+	show();
 }
 
 viewEntriesWindow::~viewEntriesWindow() {}
@@ -71,11 +71,9 @@ viewEntriesWindow::drawCell(TableContext context, int row, int col, int x, int y
 
 //populate 2d vector data with data from all entries to be displayed in the table
 void
-viewEntriesWindow::fillData() {
-	int i = 0;
+viewEntriesWindow::fillData(std::list<dataEntry*> &entryList) {
 	for (std::list<dataEntry*>::iterator entry = entryList.begin(); entry != entryList.end(); ++entry) {
-		data[i] = (*entry)->returnAllData();
-		i++;
+		data.push_back((*entry)->returnAllData());
 	}
 }
 
