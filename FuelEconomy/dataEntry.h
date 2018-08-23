@@ -1,6 +1,8 @@
 #pragma once
 #include<fstream>
 #include<iostream>
+#include<iomanip>
+#include<vector>
 #include "dataEntry.h"
 
 //class that holds information for a single fuel entry
@@ -18,6 +20,7 @@ public:
 	double returnEfficiency();
 	double returnPriceLitre();
 	double returnLitres();
+	std::vector<double> returnAllData();
 
 
 

@@ -1,17 +1,26 @@
-//Most of this code is just modified from "table-simple.cxx" included in the example folder of ftlk 1.3.4 download
+//I used "table-simple.cxx" included in the example folder of ftlk 1.3.4 download as a template for this code
 //credit to the original author Greg Ercolano
 
 #include "viewEntriesWindow.h"
 
-
-
-viewEntriesWindow::viewEntriesWindow(std::list<dataEntry*> entryList, int x, int y, int w, int h, const char *l = 0) : Fl_Table(x,y,w,h,l) {
+viewEntriesWindow::viewEntriesWindow(std::list<dataEntry*> &entryList, int x, int y, int w, int h, const char *l) : Fl_Table(x, y, w, h, l) {
+	//fill 2d data vector
+	fillData();
+	// Rows
+	rows(entryList.size());             // how many rows
+	row_header(0);              // disable row headers (along left)
+	row_height_all(20);         // default height of rows
+	row_resize(0);              // disable row resizing
+								// Cols
+	cols(6);             // how many columns
+	col_header(1);              // enable column headers (along top)
+	col_width_all(80);          // default width of columns
+	col_resize(1);              // enable column resizing
+	end();			// end the Fl_Table group
 }
 
 
-viewEntriesWindow::~viewEntriesWindow()
-{
-}
+viewEntriesWindow::~viewEntriesWindow() {}
 
 void
 viewEntriesWindow::drawHeader(const char *s, int x, int y, int w, int h) {
@@ -34,24 +43,56 @@ viewEntriesWindow::drawData(const char *s, int x, int y, int w, int h) {
 	fl_pop_clip();
 }
 
+//this function is called by fl_table, we do not call it
 void
-viewEntriesWindow::drawCell(TableContext context, int row = 0, int col = 0, int x = 0, int y = 0, int w = 0, int h = 0) {
+viewEntriesWindow::drawCell(TableContext context, int row, int col, int x, int y, int w, int h) {
 	static char s[40];
+	std::string colHeaders[6] = { "Date (YYYY/MM/DD)", "Odometer", "Total Cost", "Litres", "$/Litre", "L/100km" };
+	
 	switch (context) {
 	case CONTEXT_STARTPAGE:                   // before page is drawn..
 		fl_font(FL_HELVETICA, 16);              // set the font for our drawing operations
 		return;
 	case CONTEXT_COL_HEADER:                  // Draw column headers
-		sprintf(s, "%c", 'A' + COL);                // change so it puts in the labels for the data
+		colHeaders[col].copy(s, colHeaders[col].size(), 0); //copy col headers from string array into s[]
 		drawHeader(s, x, y, w, h);
 		return;
 	
 	case CONTEXT_CELL:                        // Draw data in cells
-		sprintf(s, "%d", data[ROW][COL]);		//change so it gets data from vector<vector<double>>
+		//have to cast first two data as int, the last 4 as doubles
+		if (col <= 1) {
+			sprintf(s, "%d", data[row][col]);
+		}
+		else {
+			sprintf(s, "%lf", data[row][col]);
+		}
+		
 		drawData(s, x, y, w, h);
 		return;
 	default:
 		return;
 	}
 }
+
+//populate 2d vector data with data from all entries to be displayed in the table
+void
+viewEntriesWindow::fillData() {
+	int i = 0;
+	for (std::list<dataEntry*>::iterator entry = entryList.begin(); entry != entryList.end(); ++entry) {
+		data[i] = (*entry)->returnAllData();
+		i++;
+	}
+}
+
+void
+viewEntriesWindow::dataToChar(const char* s, int row, int col) {
+	std::string str;
+	
+	switch (col) {
+	case 0: //date
+		str = std::to_string((int)data[row][col]);
+		str.insert(4, "/");
+		str.insert(7, "/");
+		str.insert(10, "/");
+	}
 }

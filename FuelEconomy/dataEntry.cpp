@@ -1,8 +1,4 @@
-#include<fstream>
-#include<iostream>
-#include<iomanip>
 #include "dataEntry.h"
-
 
 //creates new dataEntry with assigned values from user input
 dataEntry::dataEntry(int dateInput, int odoInput, double priceTotalInput, double litresInput, double pricePerLitreInput, double efficiencyInput){
@@ -68,4 +64,11 @@ dataEntry::returnPriceLitre() {
 double
 dataEntry::returnLitres() {
 	return litres;
+}
+
+//returns vector containing all data [date, odo, price total, litres, $/litre, efficiency]
+std::vector<double>
+dataEntry::returnAllData() {
+	std::vector<double> allData = { (double)date, (double)odo, priceTotal, litres, efficiency };
+	return allData;
 }

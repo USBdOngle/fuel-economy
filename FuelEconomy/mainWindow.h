@@ -33,6 +33,9 @@ private:
 	static void CBresetData(Fl_Widget*, void* v);
 	inline void CBresetDataI();
 
+	static void CBviewEntriesWindow(Fl_Widget*, void* v);
+	inline void CBviewEntriesWindowI();
+
 	void resetEntryList();
 	void setStatWidgetLabels();
 	

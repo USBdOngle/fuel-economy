@@ -7,6 +7,7 @@
 #include "entryStats.h"
 #include "mainWindow.h"
 #include "newEntryWindow.h"
+#include "viewEntriesWindow.h"
 
 mainWindow::mainWindow(entryStats* userStats, std::list<dataEntry*> &entries, int width, int height, const char* title) : Fl_Window(width, height, title) {
 	entryList = entries;
@@ -73,6 +74,7 @@ mainWindow::mainWindow(entryStats* userStats, std::list<dataEntry*> &entries, in
 	viewEntries->type(FL_NORMAL_BUTTON);
 	viewEntries->box(FL_UP_BOX);
 	viewEntries->labelsize(24);
+	viewEntries->callback(CBviewEntriesWindow, this);
 
 	//reset statistics and delete entries button
 	reset = new Fl_Button(20, 20, 65, 25, "Reset");
@@ -127,6 +129,17 @@ mainWindow::CBresetDataI() {
 			break;
 	}
 
+}
+
+void
+mainWindow::CBviewEntriesWindow(Fl_Widget*, void* v) {
+	((mainWindow*)v)->CBviewEntriesWindowI();
+}
+
+void
+mainWindow::CBviewEntriesWindowI() {
+	Fl_Double_Window win(900, 400, "View Entries");
+	viewEntriesWindow* window = new viewEntriesWindow(entryList, 10, 10, 880, 380);
 }
 
 void
