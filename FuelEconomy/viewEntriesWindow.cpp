@@ -10,12 +10,10 @@ viewEntriesWindow::viewEntriesWindow(std::list<dataEntry*> &entryList, int x, in
 	
 	rows(entryList.size());             // how many rows
 	row_header(0);              // disable row headers (along left)
-	row_height_all(20);         // default height of rows
-	row_resize(0);              // disable row resizing
-								// Cols
-	cols(6);             // how many columns
+							// Cols
+	cols(5);             // how many columns
 	col_header(1);              // enable column headers (along top)
-	col_width_all(80);          // default width of columns
+	col_width_all(160);          // default width of columns
 	col_resize(1);              // enable column resizing
 	end();
 	show();
@@ -46,19 +44,19 @@ viewEntriesWindow::drawData(const char *s, int x, int y, int w, int h) {
 
 //this function is called by fl_table, we do not call it
 void
-viewEntriesWindow::drawCell(TableContext context, int row, int col, int x, int y, int w, int h) {
+viewEntriesWindow::draw_cell(TableContext context, int row, int col, int x, int y, int w, int h) {
 	static char s[40];
-	std::string colHeaders[6] = { "Date (YYYY/MM/DD)", "Odometer", "Total Cost", "Litres", "$/Litre", "L/100km" };
+	std::string colHeaders[5] = { "Date (YYYY/MM/DD)", "Odometer", "Total Cost", "Litres", "$/Litre" };
 	
 	switch (context) {
 	case CONTEXT_STARTPAGE:                   // before page is drawn..
 		fl_font(FL_HELVETICA, 16);              // set the font for our drawing operations
 		return;
 	case CONTEXT_COL_HEADER:                  // Draw column headers
+		memset(s, 0, sizeof(s));
 		colHeaders[col].copy(s, colHeaders[col].size(), 0); //copy col headers from string array into s[]
 		drawHeader(s, x, y, w, h);
 		return;
-	
 	case CONTEXT_CELL:                        // Draw data in cells
 		dataToChar(s, row, col);
 		drawData(s, x, y, w, h);

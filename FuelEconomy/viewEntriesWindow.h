@@ -21,7 +21,7 @@ private:
 
 	void drawHeader(const char *s, int x, int y, int w, int h);
 	void drawData(const char *s, int x, int y, int w, int h);
-	void drawCell(TableContext context, int row = 0, int col = 0, int x = 0, int y = 0, int w = 0, int h = 0);
+	void draw_cell(TableContext context, int row = 0, int col = 0, int x = 0, int y = 0, int w = 0, int h = 0);
 
 	void fillData(std::list<dataEntry*> &entryList);
 	void dataToChar(char* s, int row, int col);

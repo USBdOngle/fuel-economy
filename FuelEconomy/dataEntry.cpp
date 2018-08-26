@@ -69,6 +69,6 @@ dataEntry::returnLitres() {
 //returns vector containing all data [date, odo, price total, litres, $/litre, efficiency]
 std::vector<double>
 dataEntry::returnAllData() {
-	std::vector<double> allData = { (double)date, (double)odo, priceTotal, litres, efficiency };
+	std::vector<double> allData = { (double)date, (double)odo, priceTotal, litres, pricePerLitre };
 	return allData;
 }

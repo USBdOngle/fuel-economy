@@ -35,6 +35,8 @@ private:
 
 	static void CBviewEntriesWindow(Fl_Widget*, void* v);
 	inline void CBviewEntriesWindowI();
+	static void CBquitViewEntriesWindow(Fl_Widget* widget, void* v);
+	inline void CBquitViewEntriesWindowI(Fl_Widget* widget);
 
 	void resetEntryList();
 	void setStatWidgetLabels();

@@ -137,14 +137,25 @@ mainWindow::CBviewEntriesWindow(Fl_Widget*, void* v) {
 }
 
 void
-mainWindow::CBviewEntriesWindowI() {
-	Fl_Double_Window* win = new Fl_Double_Window(900, 400, "View Entries");
+mainWindow::CBviewEntriesWindowI() {	
+	Fl_Double_Window* win = new Fl_Double_Window(840, 400, "View Entries");
 	win->begin();
-	viewEntriesWindow* table = new viewEntriesWindow(entryList, 10, 10, 880, 380);
-	win->end();
+	viewEntriesWindow* table = new viewEntriesWindow(entryList, 10, 10, 820, 380);
 	win->resizable(table);
-	win->show();
+	//win->callback(CBquitViewEntriesWindow);
 }	
+
+// not sure if this code is needed yet to fix problem of table not updating after submitting a new entry during current runtime
+/*void
+mainWindow::CBquitViewEntriesWindow(Fl_Widget* widget, void* v) {
+	((mainWindow*)v)->CBquitViewEntriesWindowI(widget);
+}
+
+void 
+mainWindow::CBquitViewEntriesWindowI(Fl_Widget* widget) {
+	Fl_Double_Window* window = (Fl_Double_Window*)widget;
+	delete window;
+}*/
 
 void
 mainWindow::resetEntryList() {
