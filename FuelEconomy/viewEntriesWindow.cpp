@@ -13,7 +13,7 @@ viewEntriesWindow::viewEntriesWindow(std::list<dataEntry*> &entryList, int x, in
 							// Cols
 	cols(5);             // how many columns
 	col_header(1);              // enable column headers (along top)
-	col_width_all(160);          // default width of columns
+	col_width_all(164);          // default width of columns
 	col_resize(1);              // enable column resizing
 	end();
 	show();
@@ -95,5 +95,11 @@ viewEntriesWindow::dataToChar(char* s, int row, int col) {
 		break;
 	}
 
+	int pos = str.find("."); //where to start trim
+	if (!(pos == std::string::npos)) { //does not contain "."
+		str.erase(str.begin() + pos + 3, str.end()); //delete trailing zeros after two digts of significance
+	}
+	
 	strcpy_s(s, str.length() + 1, str.c_str()); //copy string to c-string
+
 }
