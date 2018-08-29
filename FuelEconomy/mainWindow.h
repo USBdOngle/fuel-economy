@@ -2,8 +2,11 @@
 #include <FL/Fl_Window.H>
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Button.h>
+#include <FL/fl_ask.H>
 #include <list>
 #include "entryStats.h"
+#include "newEntryWindow.h"
+#include "viewEntriesWindow.h"
 
 class mainWindow : public Fl_Window{
 
@@ -35,8 +38,6 @@ private:
 
 	static void CBviewEntriesWindow(Fl_Widget*, void* v);
 	inline void CBviewEntriesWindowI();
-	//static void CBquitViewEntriesWindow(Fl_Widget* widget, void* v);
-	//inline void CBquitViewEntriesWindowI(Fl_Widget* widget);
 
 	void resetEntryList();
 	void setStatWidgetLabels();

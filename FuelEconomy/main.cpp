@@ -1,6 +1,8 @@
 //Fuel Economy Tracker
 //Christopher Rennie
 
+#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup") //prevent console from opening
+
 #include<cstdlib>
 #include<iostream>
 #include<list>

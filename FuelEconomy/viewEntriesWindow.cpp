@@ -1,6 +1,6 @@
 //I used "table-simple.cxx" included in the example folder of ftlk 1.3.4 download as a template for this code
 //credit to the original author Greg Ercolano
-
+#pragma once
 #include "viewEntriesWindow.h"
 
 viewEntriesWindow::viewEntriesWindow(std::list<dataEntry*> &entryList, int x, int y, int w, int h, const char *l) : Fl_Table(x, y, w, h, l) {
@@ -13,7 +13,7 @@ viewEntriesWindow::viewEntriesWindow(std::list<dataEntry*> &entryList, int x, in
 							// Cols
 	cols(5);             // how many columns
 	col_header(1);              // enable column headers (along top)
-	col_width_all(164);          // default width of columns
+	col_width_all(160);          // default width of columns
 	col_resize(1);              // enable column resizing
 	end();
 	show();
@@ -54,7 +54,7 @@ viewEntriesWindow::draw_cell(TableContext context, int row, int col, int x, int 
 		return;
 	case CONTEXT_COL_HEADER:                  // Draw column headers
 		memset(s, 0, sizeof(s));
-		colHeaders[col].copy(s, colHeaders[col].size(), 0); //copy col headers from string array into s[]
+		colHeaders[col].copy(s, colHeaders[col].size(), 0); //copy col header from string array into s[]
 		drawHeader(s, x, y, w, h);
 		return;
 	case CONTEXT_CELL:                        // Draw data in cells
@@ -86,20 +86,19 @@ viewEntriesWindow::dataToChar(char* s, int row, int col) {
 		str.insert(7, "/");
 		break;
 
-	case 1:
+	case 1: //ODO
 		str = std::to_string((int)data[row][col]);
 		break;
 	
-	default:
+	default: 
 		str = std::to_string(data[row][col]);
 		break;
 	}
-
+	
 	int pos = str.find("."); //where to start trim
 	if (!(pos == std::string::npos)) { //does not contain "."
 		str.erase(str.begin() + pos + 3, str.end()); //delete trailing zeros after two digts of significance
 	}
-	
-	strcpy_s(s, str.length() + 1, str.c_str()); //copy string to c-string
 
+	strcpy_s(s, str.length() + 1, str.c_str()); //copy string to c-string
 }

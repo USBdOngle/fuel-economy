@@ -1,7 +1,4 @@
-#include<list>
-#include<string>
 #include "entryStats.h"
-#include "dataEntry.h"
 
 entryStats::entryStats(std::list<dataEntry*> &entries) {
 

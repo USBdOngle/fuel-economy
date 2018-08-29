@@ -1,4 +1,6 @@
 #pragma once
+#include<list>
+#include<string>
 #include "dataEntry.h"
 
 class entryStats

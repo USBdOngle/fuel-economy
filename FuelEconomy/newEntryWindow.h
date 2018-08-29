@@ -24,9 +24,7 @@ public:
 	Fl_Input* odoInput; //receives user odo input
 	Fl_Input* priceTotalInput; //receives user total price input
 	Fl_Input* litresTotalInput; //receives user total litres input
-
 	Fl_Button* saveButton; //button to save entry from input boxes
-	//Fl_Button* quitButton; // TO BE DELETED
 
 private:
 

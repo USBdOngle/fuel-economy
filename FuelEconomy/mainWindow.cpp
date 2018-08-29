@@ -1,13 +1,4 @@
-#include <FL/Fl.H>
-#include <FL/Fl_Window.H>
-#include <FL/Fl_Box.H>
-#include <FL/Fl_Button.h>
-#include <FL/fl_ask.H>
-#include <list>
-#include "entryStats.h"
 #include "mainWindow.h"
-#include "newEntryWindow.h"
-#include "viewEntriesWindow.h"
 
 mainWindow::mainWindow(entryStats* userStats, std::list<dataEntry*> &entries, int width, int height, const char* title) : Fl_Window(width, height, title) {
 	entryList = entries;
@@ -142,20 +133,7 @@ mainWindow::CBviewEntriesWindowI() {
 	viewEntriesWindow* table = new viewEntriesWindow(entryList, 10, 10, 822, 380);
 	win->resizable(table);
 	win->show();
-	//win->callback(CBquitViewEntriesWindow);
 }	
-
-// not sure if this code is needed yet to fix problem of table not updating after submitting a new entry during current runtime
-/*void
-mainWindow::CBquitViewEntriesWindow(Fl_Widget* widget, void* v) {
-	((mainWindow*)v)->CBquitViewEntriesWindowI(widget);
-}
-
-void 
-mainWindow::CBquitViewEntriesWindowI(Fl_Widget* widget) {
-	Fl_Double_Window* window = (Fl_Double_Window*)widget;
-	delete window;
-}*/
 
 void
 mainWindow::resetEntryList() {
