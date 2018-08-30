@@ -15,21 +15,21 @@ newEntryWindow::newEntryWindow(std::list<dataEntry*> &entries, entryStats* userS
 	begin();
 	
 	//date input box
-	dateInput = new Fl_Input(55, 25, 160, 35, "Date");
+	dateInput = new Fl_Input(55, 35, 160, 35, "Date");
 	dateInput->labelfont(FL_BOLD);
 	dateInput->labelsize(18);
 
 	//odo input box
-	odoInput = new Fl_Input(55, 80, 160, 35, "ODO");
+	odoInput = new Fl_Input(55, 90, 160, 35, "ODO");
 	odoInput->labelfont(FL_BOLD);
 	odoInput->labelsize(18);
 
 	//total price input box
-	priceTotalInput = new Fl_Input(55, 135, 160, 35, "Total $");
+	priceTotalInput = new Fl_Input(55, 145, 160, 35, "Total $");
 	priceTotalInput->labelfont(FL_BOLD);
 
 	//total litres input box
-	litresTotalInput = new Fl_Input(55, 190, 160, 35, "Litres");
+	litresTotalInput = new Fl_Input(55, 200, 160, 35, "Litres");
 	litresTotalInput->labelfont(FL_BOLD);
 	litresTotalInput->labelsize(18);
 
@@ -39,6 +39,10 @@ newEntryWindow::newEntryWindow(std::list<dataEntry*> &entries, entryStats* userS
 	saveButton = new Fl_Button(25, 260, 190, 70, "SAVE");
 	saveButton->labelsize(24);
 	saveButton->callback(CBsaveAndUpdate, this);
+
+	//displays helpful information
+	helpButton = new Fl_Button(15, 8, 40, 20, "HELP");
+	helpButton->callback(CBdisplayHelp);
 
 	end();
 	show();
@@ -107,6 +111,21 @@ newEntryWindow::checkInput(double convertedInputs[4]) {
 	//add more checks as I think of them...
 	else { return true; }
 }
+
+void
+newEntryWindow::CBdisplayHelp(Fl_Widget*, void*) {
+	Fl_Double_Window* win = new Fl_Double_Window(300, 300, "Help");
+	
+	Fl_Multiline_Output* output = new Fl_Multiline_Output(5,5,290, 290, "");
+	output->value("test \n test");
+	
+	win->show();
+}
+
+/*void
+newEntryWindow::CBdisplayHelpI() {
+	Fl_Double_Window* win = new Fl_Double_Window(200, 300, "Help");
+}*/
 
 void
 newEntryWindow::CBsaveAndUpdate(Fl_Widget* , void* v) {

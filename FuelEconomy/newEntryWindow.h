@@ -4,6 +4,8 @@
 #include <FL/Fl_Button.h>
 #include <FL/Fl_Input.H>
 #include <FL/fl_ask.H>
+#include <FL/Fl_Double_Window.H>
+#include <FL/Fl_Multiline_Output.H>
 #include <list>
 #include <algorithm>
 #include <string>
@@ -20,7 +22,7 @@ public:
 	newEntryWindow(std::list<dataEntry*> &entries, entryStats* userStats, Fl_Widget* effWidget, Fl_Widget* distWidget, Fl_Widget* fillsWidget, Fl_Widget* litreWidget, int width, int height, const char* title);
 	~newEntryWindow();
 
-	Fl_Input* dateInput; //receives user date input
+	Fl_Input * dateInput; //receives user date input
 	Fl_Input* odoInput; //receives user odo input
 	Fl_Input* priceTotalInput; //receives user total price input
 	Fl_Input* litresTotalInput; //receives user total litres input
@@ -37,8 +39,12 @@ private:
 	Fl_Widget* fillsW;
 	Fl_Widget* litreW;
 
+	Fl_Button* helpButton; //displays helpful information
+
 	static void CBsaveAndUpdate(Fl_Widget*, void* v);
 	inline void CBsaveAndUpdateI();
+
+	static void CBdisplayHelp(Fl_Widget*, void*);
 
 	bool checkInput(double convertedInputs[4]);
 	bool convertInputs(double convertedInputs[4], const char* date, const char* odo, const char* priceTotal, const char* litresTotal);
