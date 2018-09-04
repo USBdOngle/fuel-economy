@@ -45,7 +45,7 @@ private:
 	inline void CBsaveAndUpdateI();
 
 	static void CBdisplayHelp(Fl_Widget*, void*);
-
+	inline void CBdisplayHelpI();
 	bool checkInput(double convertedInputs[4]);
 	bool convertInputs(double convertedInputs[4], const char* date, const char* odo, const char* priceTotal, const char* litresTotal);
 	void updateStatMainW();

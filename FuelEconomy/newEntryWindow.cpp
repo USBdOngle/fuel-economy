@@ -3,7 +3,7 @@
 
 
 newEntryWindow::newEntryWindow(std::list<dataEntry*> &entries, entryStats* userStats, Fl_Widget* effWidget, Fl_Widget* distWidget, Fl_Widget* fillsWidget, Fl_Widget* litreWidget, int width, int height, const char* title) : Fl_Window(width, height, title){
-	
+
 	entryList = entries; 
 	stats = userStats;
 
@@ -113,19 +113,24 @@ newEntryWindow::checkInput(double convertedInputs[4]) {
 }
 
 void
-newEntryWindow::CBdisplayHelp(Fl_Widget*, void*) {
-	Fl_Double_Window* win = new Fl_Double_Window(300, 300, "Help");
-	
-	Fl_Multiline_Output* output = new Fl_Multiline_Output(5,5,290, 290, "");
-	output->value("test \n test");
-	
-	win->show();
+newEntryWindow::CBdisplayHelp(Fl_Widget*, void* v) {
+	((newEntryWindow*)v)->CBdisplayHelpI();
 }
 
-/*void
+void
 newEntryWindow::CBdisplayHelpI() {
-	Fl_Double_Window* win = new Fl_Double_Window(200, 300, "Help");
-}*/
+	
+	const char* helpMessage = "IMPORTANT:\n-You must fill gas tank completely for proper\nefficiency tracking.\n-Do not forget to record every fill-up.\n-In either case you must reset and start over\n"
+							  "or update saveData.txt manually (advanced).\n\nIf this is your first entry:\n -Your efficiency will be displayed after you\n input your second entry.\n\n"
+							  "Legend:\n-Date = The date you fueled up on.\n-ODO = Odometer reading when you fueled up.\n-Total $ = Total cost of fuel-up.\n-Litres = Total number of litres purchased.";
+		
+	
+	Fl_Double_Window* win = new Fl_Double_Window(300, 300, "Help");
+	Fl_Multiline_Output* output = new Fl_Multiline_Output(5, 5, 290, 290, "");
+	output->box(FL_NO_BOX);
+	output->value(helpMessage);
+	win->show();
+}
 
 void
 newEntryWindow::CBsaveAndUpdate(Fl_Widget* , void* v) {
