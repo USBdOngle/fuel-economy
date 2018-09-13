@@ -3,7 +3,6 @@
 #include<iostream>
 #include<iomanip>
 #include<vector>
-#include "dataEntry.h"
 
 //class that holds information for a single fuel entry
 class dataEntry{
